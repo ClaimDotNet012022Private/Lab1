@@ -11,6 +11,7 @@ namespace ClaimLab1
 
 1. Show Grades
 2. Add Grade
+3. Show Average Grade
 
 Please select one of the above options:";
 
@@ -41,6 +42,9 @@ Please select one of the above options:";
                         break;
                     case 2:
                         AddGrade(grades);
+                        break;
+                    case 3:
+                        ShowAverageGrade(grades);
                         break;
                     default:
                         ShowError($"The number {option} is outside the allowed range.");
@@ -105,6 +109,28 @@ Please select one of the above options:";
 
             } while (!valid);
 
+        }
+
+        static void ShowAverageGrade(List<double> grades)
+        {
+            Console.Clear();
+
+            if (grades.Count > 0)
+            {
+                double sum = 0;
+                foreach (double grade in grades)
+                {
+                    sum += grade;
+                }
+
+                double avg = sum / grades.Count;
+
+                Console.WriteLine($"Average Grade: {avg}");
+            }
+            else
+            {
+                Console.WriteLine("There are no grades to display.");
+            }
         }
     }
 }
