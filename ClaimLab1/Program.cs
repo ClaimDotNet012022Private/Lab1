@@ -9,6 +9,7 @@ namespace ClaimLab1
         {
             const string menuText = @"Welcome to the grade manager!
 
+1. Show Grades
 2. Add Grade
 
 Please select one of the above options:";
@@ -35,6 +36,9 @@ Please select one of the above options:";
 
                 switch (option)
                 {
+                    case 1:
+                        ShowGrades(grades);
+                        break;
                     case 2:
                         AddGrade(grades);
                         break;
@@ -62,6 +66,18 @@ Please select one of the above options:";
         }
 
         
+        static void ShowGrades(List<double> grades)
+        {
+            if (grades.Count == 0)
+            {
+                Console.WriteLine("There are no grades to display.");
+            }
+
+            for (int s = 0; s < grades.Count; s++) 
+            {
+                Console.WriteLine($"Student {s}:\t{grades[s]}");
+            }
+        }
 
         static void AddGrade(List<double> grades)
         {
