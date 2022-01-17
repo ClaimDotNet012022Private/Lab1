@@ -16,11 +16,13 @@ namespace ClaimLab1
 5. Show Worst Grade
 6. Remove Grade
 7. Edit Grade
+8. Exit Application
 
 Please select one of the above options:";
 
             List<double> grades = new List<double>();
 
+            bool shouldContinue = true;
             do
             {
                 Console.Clear();
@@ -62,13 +64,17 @@ Please select one of the above options:";
                     case 7: 
                         EditGrade(grades);
                         break;
+                    case 8:
+                        shouldContinue = false;
+                        Console.Write("Exiting. ");
+                        break;
                     default:
                         ShowError($"The number {option} is outside the allowed range.");
                         continue;
                 }
 
                 Pause();
-            } while (true);
+            } while (shouldContinue);
             
         }
 
