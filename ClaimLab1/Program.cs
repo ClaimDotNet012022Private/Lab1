@@ -68,6 +68,8 @@ Please select one of the above options:";
         
         static void ShowGrades(List<double> grades)
         {
+            Console.Clear();
+
             if (grades.Count == 0)
             {
                 Console.WriteLine("There are no grades to display.");
