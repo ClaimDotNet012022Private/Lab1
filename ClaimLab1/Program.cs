@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ClaimLab1
 {
@@ -8,8 +9,11 @@ namespace ClaimLab1
         {
             const string menuText = @"Welcome to the grade manager!
 
+2. Add Grade
+
 Please select one of the above options:";
 
+            List<double> grades = new List<double>();
 
             do
             {
@@ -24,19 +28,19 @@ Please select one of the above options:";
                 }
                 catch (Exception)
                 {
-                    Console.Beep();
-                    Console.WriteLine($"'{input}' is not a valid integer.");
-                    Pause();
+                    ShowError($"'{input}' is not a valid integer.");
                     continue;
                 }
 
 
-                switch(option)
+                switch (option)
                 {
-                    default:
-                        Console.Beep();
-                        Console.WriteLine($"The number {option} is outside the allowed range.");
+                    case 2:
+                        AddGrade(grades);
                         break;
+                    default:
+                        ShowError($"The number {option} is outside the allowed range.");
+                        continue;
                 }
 
                 Pause();
@@ -44,6 +48,12 @@ Please select one of the above options:";
             
         }
 
+        private static void ShowError(string message)
+        {
+            Console.Beep();
+            Console.WriteLine(message);
+            Pause();
+        }
 
         static void Pause()
         {
@@ -52,5 +62,31 @@ Please select one of the above options:";
         }
 
         
+
+        static void AddGrade(List<double> grades)
+        {
+            bool valid;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine($"Please enter a grade for Student {grades.Count}:");
+
+                string input = Console.ReadLine();
+
+                try
+                {
+                    double grade = double.Parse(input);
+                    grades.Add(grade);
+                    valid = true;
+                }
+                catch
+                {
+                    ShowError($"'{input}' is not a valid grade.");
+                    valid = false;
+                }
+
+            } while (!valid);
+
+        }
     }
 }
