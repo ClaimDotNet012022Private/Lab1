@@ -15,6 +15,7 @@ namespace ClaimLab1
 4. Show Best Grade
 5. Show Worst Grade
 6. Remove Grade
+7. Edit Grade
 
 Please select one of the above options:";
 
@@ -57,6 +58,9 @@ Please select one of the above options:";
                         break;
                     case 6:
                         RemoveGrade(grades);
+                        break;
+                    case 7: 
+                        EditGrade(grades);
                         break;
                     default:
                         ShowError($"The number {option} is outside the allowed range.");
@@ -225,7 +229,70 @@ Please select one of the above options:";
 
         }
 
+        static void EditGrade(List<double> grades)
+        {
+            if (grades.Count == 0)
+            {
+                Console.Clear();
+                Console.WriteLine("There are no grades to edit.");
+                return;
+            }
 
+            bool valid;
+            do
+            {
+                ShowGrades(grades);
+
+                Console.WriteLine("Enter the student ID for the grade to edit:");
+
+                string input = Console.ReadLine();
+                int studentId = 0;
+                try
+                {
+                    studentId = int.Parse(input);
+
+                    valid = EditGradeForStudent(grades, studentId);
+                }
+                catch (FormatException)
+                {
+                    ShowError($"'{input}' is not a valid ID number.");
+                    valid = false;
+                }
+                
+
+            } while (!valid);
+
+        }
+
+        static bool EditGradeForStudent(List<double> grades, int studentId)
+        {
+            bool didSucceed = false;
+
+            string input = "";
+            try
+            {
+                Console.WriteLine($"Current grade for student {studentId}: {grades[studentId]}");
+                Console.WriteLine("Enter the new grade:");
+                input = Console.ReadLine();
+
+                double newGrade = double.Parse(input);
+                grades[studentId] = newGrade;
+                didSucceed = true;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                ShowError($"There is no student with ID number {studentId}");
+                didSucceed = false;
+            }
+            catch (FormatException)
+            {
+                ShowError($"'{input}' is not a valid grade.");
+                didSucceed = false;
+            }
+
+
+            return didSucceed;
+        }
 
     }
 }
