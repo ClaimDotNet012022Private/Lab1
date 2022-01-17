@@ -14,6 +14,7 @@ namespace ClaimLab1
 3. Show Average Grade
 4. Show Best Grade
 5. Show Worst Grade
+6. Remove Grade
 
 Please select one of the above options:";
 
@@ -53,6 +54,9 @@ Please select one of the above options:";
                         break;
                     case 5:
                         ShowWorstGrade(grades);
+                        break;
+                    case 6:
+                        RemoveGrade(grades);
                         break;
                     default:
                         ShowError($"The number {option} is outside the allowed range.");
@@ -180,6 +184,48 @@ Please select one of the above options:";
                 Console.WriteLine("There are no grades to display.");
             }
         }
+
+
+        static void RemoveGrade(List<double> grades)
+        {
+            if (grades.Count == 0)
+            {
+                Console.Clear();
+                Console.WriteLine("There are no grades to remove.");
+                return;
+            }
+
+            bool valid;
+            do
+            {
+                ShowGrades(grades);
+
+                Console.WriteLine("Enter the student ID for the grade to remove:");
+
+                string input = Console.ReadLine();
+                int studentId = 0;
+                try
+                {
+                    studentId = int.Parse(input);
+                    grades.RemoveAt(studentId);
+                    valid = true;
+                }
+                catch(FormatException)
+                {
+                    ShowError($"'{input}' is not a valid ID number.");
+                    valid = false;
+                }
+                catch(ArgumentOutOfRangeException)
+                {
+                    ShowError($"There is no student with ID number {studentId}");
+                    valid = false;
+                }
+
+            } while (!valid);
+
+        }
+
+
 
     }
 }
